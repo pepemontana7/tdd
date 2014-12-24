@@ -1,8 +1,10 @@
 from django.test import TestCase
 from lists.forms import ItemForm
 from lists.forms import EMPTY_LIST_ERROR, ItemForm
-class ItemFormTest(TestCase):
+from lists.models import Item, List
 
+
+class ItemFormTest(TestCase):
 
     def test_form_item_input_has_placeholder_and_css_classes(self):
         form = ItemForm()
@@ -16,3 +18,12 @@ class ItemFormTest(TestCase):
             form.errors['text'],
             [EMPTY_LIST_ERROR]
         ) 
+ 
+    def test_form_save_handles_saving_to_a_list(self):
+        list_ = List.objects.create()
+        form = ItemForm(data={'text': 'do me'})
+        new_item = form.save(for_list=list_)
+        self.assertEqual(new_item, Item.objects.first() )
+        self.assertEqual(new_item.text, 'do me' )
+        self.assertEqual(new_item.list, list_ )
+
