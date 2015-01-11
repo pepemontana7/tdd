@@ -23,6 +23,8 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+DOMAIN = "localhost"
+
 ALLOWED_HOSTS = []
 
 
@@ -36,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lists',
+    'functional_tests',
     'accounts',
 )
 
